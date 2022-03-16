@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-checkout-app-blank",
-    "slug": "react-checkout-app-blank",
+    "name": "react-checkout-flow",
+    "slug": "react-checkout-flow",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
