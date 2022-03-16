@@ -1,9 +1,62 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, Button } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProductCard({ data: product }) {
-  const addToCart = () => {
-    console.log("added to cart");
+  const storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem('@cartState', value)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const getData = async (key) => {
+    try {
+      const jsonValue = await AsyncStorage.getItem(key)
+      return jsonValue != null ? jsonValue : null;
+    } catch(e) {
+      console.log(e);
+      return null;
+    }
+  }
+
+  const removeData = async (key) => {
+    try {
+      await AsyncStorage.removeItem(key)
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+
+  const addToCart = (id, quantity) => {
+    var cartData = [];
+    let currentCart = getData('@cartState');
+    currentCart.then((result)=>{
+      // check if item in cart
+    if(result == null) {
+      cartData.push({id:id, quantity:quantity});
+      storeData(JSON.stringify(cartData));
+    } else {
+        result = JSON.parse(result);
+        let resultCopy = result.slice();
+        for (let i = 0; i < result.length; i++) {
+          if(result[i].id == id) {
+            // if item is in cart, increase qty
+            resultCopy[i].quantity++;
+          } else if(i === result.length - 1) {
+            // otherwise, it's a new item
+            resultCopy.push({id:id, quantity:quantity});
+          }
+        }
+        cartData = resultCopy;
+        
+        // use state?
+        removeData('@cartState');
+        storeData(JSON.stringify(cartData));
+      }    
+    })
   }
 
   return (
@@ -13,7 +66,7 @@ export default function ProductCard({ data: product }) {
                style={{width: 400, height: 400}} />
         <Text style={styles.productName}>{ product.name }</Text>
         <Text style={styles.productPrice}>{ product.price }</Text>
-        <Button  title='Add To Cart' onPress={addToCart}></Button>
+        <Button  title='Add To Cart' onPress={() => addToCart(product.id, 1)}></Button>
       </View>
     </View>
   );
