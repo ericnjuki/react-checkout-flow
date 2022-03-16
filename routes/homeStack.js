@@ -6,9 +6,15 @@ import ViewProductDetails from '../screens/viewProductDetails';
 const screens = {
   Home: {
     screen: Home,
+    navigationOptions: {
+      title: 'Products'
+    }
   },
-  ReviewDetails: {
+  ViewProductDetails: {
     screen: ViewProductDetails,
+    navigationOptions: {
+      title: 'Product Details'
+    }
   },
 };
 

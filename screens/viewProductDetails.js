@@ -1,13 +1,21 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Image, Button } from 'react-native';
 import { globalStyles } from '../styles/global';
 
 export default function ViewProductDetails({ navigation }) {
+
+  const addToCart = () => {
+    console.log("added to cart");
+  }
+
   return (
     <View style={globalStyles.container}>
-      <Text>{ navigation.getParam('name') }</Text>
+      <Text style={globalStyles.productTitle}>{ navigation.getParam('name') }</Text>
+      <Image source={require(`../assets/product-images/${navigation.getParam('src')}`)}
+             style={{width: 400, height: 400}} />
       <Text>{ navigation.getParam('description') }</Text>
-      <Text>{ navigation.getParam('price') }</Text>
+      <Text style={globalStyles.productTitle}>{ navigation.getParam('price') }</Text>
+      <Button title='Add To Cart' onPress={addToCart}></Button>
     </View>
   );
 }

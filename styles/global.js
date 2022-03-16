@@ -17,4 +17,13 @@ export const globalStyles = StyleSheet.create({
   productListing: {
     padding: 20
   },
+  productTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  productPrice: {
+    fontWeight: 'bold',
+    color: '#00FF00',
+  },
 });
