@@ -26,4 +26,11 @@ export const globalStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#00FF00',
   },
+  header: {
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
