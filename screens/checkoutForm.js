@@ -2,12 +2,24 @@ import React, { useState } from 'react';
 import { StyleSheet, Button, TextInput, View, Text, TouchableOpacity } from 'react-native';
 import { globalStyles } from '../styles/global.js';
 import { Formik, Field } from 'formik'; 
-import CheckBox from '@react-native-community/checkbox';
 import * as yup from 'yup';
 
-const ReviewSchema = yup.object({
-  name: yup.string().required(),
-  email: yup.string().email().required()
+const checkoutSchema = yup.object({
+  name: yup.string().required('name is required'),
+  email: yup.string()
+  .email('invalid email address')
+  .required('email is required'),
+  country: yup.string().required('please select your country'),
+  city: yup.string().required('city is required'),
+  shippingaddress: yup.string().required(),
+  creditcard: yup.string().required('please enter your credit card number').min(10, 'invalid credit card number'),
+  creditcardexpiry: yup.string().required('please enter credit card expiry date')
+  .test('is-date-format', 'date format is MM/YY', (val)=>{
+    // return true;
+    return /^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/.test(val);
+  }),
+  billingaddress: yup.string(),
+  cvc: yup.string().required('please enter your cvc number').min(3, 'minimum 3 characters')
 });
 
 
@@ -18,7 +30,8 @@ export default function CheckoutForm({ makePayment }) {
     
     <View style={globalStyles.container}>
       <Formik
-        initialValues={{ name: '', email: '', country: '', city: '', shippingaddress: '', creditcard: '', creditcardexpiy: '', cvc: '', billingaddress: '' }}
+        initialValues={{ name: '', email: '', country: '', city: '', shippingaddress: '', creditcard: '', creditcardexpiry: '', cvc: '', billingaddress: '' }}
+        validationSchema = {checkoutSchema}
         onSubmit={(values, actions) => {
           actions.resetForm(); 
           makePayment(values);
@@ -32,6 +45,7 @@ export default function CheckoutForm({ makePayment }) {
               onChangeText={props.handleChange('name')}
               value={props.values.name}
             />
+            <Text style={globalStyles.formError}>{ props.errors.name }</Text>
 
             <TextInput
               style={globalStyles.input}
@@ -39,8 +53,21 @@ export default function CheckoutForm({ makePayment }) {
               onChangeText={props.handleChange('email')}
               value={props.values.email}
             />
+            <Text style={globalStyles.formError}>{ props.errors.email }</Text>
+
 
             {countryList()}
+            <Text style={globalStyles.formError}>{ props.errors.country }</Text>
+
+            
+            <TextInput
+              style={globalStyles.input}
+              placeholder='City'
+              onChangeText={props.handleChange('city')}
+              value={props.values.city}
+            />
+            <Text style={globalStyles.formError}>{ props.errors.city }</Text>
+
 
             <TextInput
               style={globalStyles.input}
@@ -48,6 +75,8 @@ export default function CheckoutForm({ makePayment }) {
               onChangeText={props.handleChange('shippingaddress')}
               value={props.values.shippingaddress}
             />
+            <Text style={globalStyles.formError}>{ props.errors.billingaddress }</Text>
+
 
             <TextInput 
               style={globalStyles.input}
@@ -56,37 +85,36 @@ export default function CheckoutForm({ makePayment }) {
               value={props.values.creditcard}
               keyboardType='numeric'
             />
+            <Text style={globalStyles.formError}>{ props.errors.creditcard }</Text>
+
 
             <TextInput
               style={globalStyles.input}
               placeholder='Expiry MM/YY'
-              onChangeText={props.handleChange('expiry')}
-              value={props.values.email}
+              onChangeText={props.handleChange('creditcardexpiry')}
+              value={props.values.expiry}
               keyboardType='numeric'
             />
+            <Text style={globalStyles.formError}>{ props.errors.creditcardexpiry }</Text>
 
             <TextInput
               style={globalStyles.input}
               placeholder='CVC'
               onChangeText={props.handleChange('cvc')}
-              value={props.values.email}
+              value={props.values.cvc}
               keyboardType='numeric'
             />
+            <Text style={globalStyles.formError}>{ props.errors.cvc }</Text>
 
-            {/* <CheckBox
-              disabled={false}
-              value={toggleCheckBox}
-              onValueChange={(newValue) => setToggleCheckBox(newValue)}
-            /> */}
             <TextInput
               style={globalStyles.input}
-              placeholder='Billing Address'
+              placeholder='Billing Address (fill in if different from shipping address)'
               onChangeText={props.handleChange('billingaddress')}
               value={props.values.billingaddress}
             />
             
 
-            <Button color='maroon' title="Submit" onPress={props.handleSubmit} /> 
+            <Button color='blue' title="Pay" onPress={props.handleSubmit} /> 
           </View>
         )}
       </Formik>
@@ -107,6 +135,7 @@ export default function CheckoutForm({ makePayment }) {
 
 const countryList = () => {
   return  <Field id="country" name="country" as="select">
+  <option value="" defaultValue={""}>-- Select Country --</option>
   <option value="Afghanistan">Afghanistan</option>
   <option value="Åland Islands">Åland Islands</option>
   <option value="Albania">Albania</option>

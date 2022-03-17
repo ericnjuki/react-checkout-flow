@@ -47,5 +47,9 @@ export const globalStyles = StyleSheet.create({
     fontWeight: 'bold',
     borderWidth: 1,
     borderColor: '#ddd',
+  },
+  formError: {
+    color: '#ff0000',
+    fontSize: 12,
   }
 });

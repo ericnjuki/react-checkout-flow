@@ -15,14 +15,12 @@ export default function Pay(props) {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={globalStyles.container}>
         <>
         <Text style={globalStyles.productTitle}>Choose your payment option</Text>
         <CheckoutForm makePayment={makePayment} />
         </>
       </View>
-    </TouchableWithoutFeedback>
   );
 }
 

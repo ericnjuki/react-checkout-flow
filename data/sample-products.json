@@ -5,7 +5,7 @@
    "description": "This fashionable tee is made of 100% cotton. It is the perfect size for you",
    "stock": 5,
    "price": 19.99,
-   "src": "tee.jpg"
+   "src": "https://res.cloudinary.com/dw2g6edg6/image/upload/v1647495811/tee_kyyqst.jpg"
  },
  {
    "id": 1,
@@ -13,7 +13,7 @@
    "description": "These fresh jeans will have everyone turning their heads",
    "stock": 5,
    "price": 19.99,
-   "src": "jeans.jpg"
+   "src": "https://res.cloudinary.com/dw2g6edg6/image/upload/v1647495802/jeans_oc9nin.jpg"
  },
  {
    "id": 2,
@@ -21,7 +21,7 @@
    "description": "Be the center of attention with this sleek hoodie",
    "stock": 5,
    "price": 59.99,
-   "src": "hoodie.jpg"
+   "src": "https://res.cloudinary.com/dw2g6edg6/image/upload/v1647495802/hoodie_zht8xy.jpg"
  },
  {
    "id": 3,
@@ -29,7 +29,7 @@
    "description": "These shoes will make you literally walk on air!",
    "stock": 5,
    "price": 99.99,
-   "src": "shoes.jpg"
+   "src": "https://res.cloudinary.com/dw2g6edg6/image/upload/v1647495803/shoes_ej8wae.jpg"
  },
  {
    "id": 4,
@@ -37,7 +37,7 @@
    "description": "Keep the cold out and the awesomness in!",
    "stock": 5,
    "price": 44.99,
-   "src": "sweater.jpg"
+   "src": "https://res.cloudinary.com/dw2g6edg6/image/upload/v1647495810/sweater_uzdgpg.jpg"
  },
  {
    "id": 5,
@@ -45,7 +45,7 @@
    "description": "Get your Clark Kent look with these super cool glasses",
    "stock": 5,
    "price": 149.99,
-   "src": "glasses.jpg"
+   "src": "https://res.cloudinary.com/dw2g6edg6/image/upload/v1647495745/glasses_ejaah6.jpg"
  },
  {
    "id": 6,
@@ -53,6 +53,6 @@
    "description": "This jacket will make you look so dangerously cool that lions will flee from you",
    "stock": 5,
    "price": 74.99,
-   "src": "jacket.jpg"
+   "src": "https://res.cloudinary.com/dw2g6edg6/image/upload/v1647495803/jacket_xujliy.jpg"
  }
 ]

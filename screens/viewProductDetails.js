@@ -11,10 +11,10 @@ export default function ViewProductDetails({ navigation }) {
   return (
     <View style={globalStyles.container}>
       <Text style={globalStyles.productTitle}>{ navigation.getParam('name') }</Text>
-      <Image source={require(`../assets/product-images/${navigation.getParam('src')}`)}
+      <Image source={{uri: navigation.getParam('src')}}
              style={{width: 400, height: 400}} />
       <Text>{ navigation.getParam('description') }</Text>
-      <Text style={globalStyles.productTitle}>{ navigation.getParam('price') }</Text>
+      <Text style={globalStyles.productTitle}>${ navigation.getParam('price') }</Text>
       <Button title='Add To Cart' onPress={addToCart}></Button>
     </View>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, FlatList, Modal, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Modal, TouchableOpacity, ScrollView, Image } from 'react-native';
 
 import Header from '../components/header';
 import ProductCard from '../components/productCard';
@@ -102,7 +102,7 @@ export default function Home(props) {
           <Text style={styles.checkoutBtnText}>Proceed to Checkout</Text>
         </TouchableOpacity>
       </Modal>
-
+       
       <FlatList data={products} renderItem={({ item }) => (
         <TouchableOpacity onPress={() => navigation.navigate('ViewProductDetails', item)}>
           <ProductCard data={item} />

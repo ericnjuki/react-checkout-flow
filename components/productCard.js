@@ -89,10 +89,10 @@ export default function ProductCard({ data: product }) {
   return (
     <View style={styles.card}>
       <View style={styles.cardContent}>
-        <Image source={require(`../assets/product-images/${product.src}`)}
+        <Image source={{uri: product.src}}
                style={{width: 400, height: 400}} />
         <Text style={styles.productName}>{ product.name }</Text>
-        <Text style={styles.productPrice}>{ product.price }</Text>
+        <Text style={styles.productPrice}>${ product.price }</Text>
         <Button  title='Add To Cart' onPress={() => addToCart(product.id, 1)}></Button>
       </View>
     </View>

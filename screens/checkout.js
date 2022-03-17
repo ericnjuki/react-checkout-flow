@@ -25,10 +25,10 @@ export default function Checkout(props) {
       <FlatList data={items} renderItem={({ item }) => (
         <View style={styles.productListItem}>
           <Text>{ item.quantity } x { products[item.id].name }</Text>
-          <Image source={require(`../assets/product-images/${products[item.id].src}`)}
+          <Image source={{uri: products[item.id].src}}
                  style={{width: 100, height: 100}} />
-          <Text>{ item.quantity } x { products[item.id].price }</Text>
-          <Text> = ${ item.itemTotal }</Text>
+          <Text>{ item.quantity } x ${ products[item.id].price }</Text>
+          <Text> = ${ Math.floor(item.itemTotal * 100) / 100 }</Text>
         </View>
       )} />
       <Text>TOTAL: ${total}</Text>

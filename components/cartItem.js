@@ -75,14 +75,13 @@ export default function CartItem({ data: product }) {
     <View style={styles.card}>
       <Text style={styles.productName}>{ productData[cartItemData.id].name }</Text>
       <View style={styles.cardContent}>
-        {/* <Image source={require(`../assets/product-images/${product.src}`)}
+        <Image source={{uri: productData[cartItemData.id].src}}
                style={{width: 100, height: 100}} />
-        <Text style={styles.productName}>{ product.name }</Text>
-        <Text style={styles.productPrice}>{ product.price }</Text> */}
+        <Text>${productData[cartItemData.id].price } x </Text>
         <Button style={styles.qtyBtn} title='<' onPress={() => decreaseQty(cartItemData.id, 1)}></Button>
         <Text>{ cartItemData.quantity }</Text>
         <Button style={styles.qtyBtn} title='>' onPress={() => increaseQty(cartItemData.id, 1)}></Button>
-        <Text style={styles.productPrice}>{ productData[cartItemData.id].price *  cartItemData.quantity }</Text>
+        <Text style={styles.productPrice}>${ Math.floor(productData[cartItemData.id].price *  cartItemData.quantity * 100) / 100 }</Text>
       </View>
     </View>
   );
