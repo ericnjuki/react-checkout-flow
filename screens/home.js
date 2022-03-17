@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList, Modal } from 'react-native';
-import { Button } from 'react-native-web';
+import { StyleSheet, View, Text, FlatList, Modal, TouchableOpacity, ScrollView } from 'react-native';
+
 import Header from '../components/header';
 import ProductCard from '../components/productCard';
 import { globalStyles } from '../styles/global';
@@ -38,29 +38,41 @@ let retrieveCartItems = function() {
   })
 }
 
-export default function Home({ navigation }) {
+export default function Home(props) {
+  let navigation = props.navigation;
   const [products, setProducts] = useState(productData);
   const [cartItems, setCartItems] = useState([]);
+  const [cartTotal, setCartTotal] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
  
   let retrieveCartItems = function() {
     let cartData = getData('@cartState');
     cartData.then((result)=>{
       result = JSON.parse(result);
-      let cartItems = [];
-      cartItems.push(result.quantity);
-      setCartItems(cartItems);
-      return cartItems;
+      // let cartItems = [];
+      // cartItems.push(result);
+      setCartItems(result);
+      getCartTotal(result);
+      // return cartItems;
     })
   }
 
+  const getCartTotal = function(cartItemsCopy) {
+    let total = 0;
+    for(let i = 0; i < cartItemsCopy.length; i++) {
+      total += products[cartItemsCopy[i].id].price * cartItemsCopy[i].quantity;
+    }
+    Number(Math.round(parseFloat(total + 'e' + 2)) + 'e-' + 2);
+    setCartTotal(total);
+  }
+
   const viewCart = function() {
-    setModalVisible(true);
     retrieveCartItems();
-    console.log("you're viewing the cart: ");
+    setModalVisible(true);
   }
 
   const closeModal = () => {
+    retrieveCartItems();
     setModalVisible(false);
   }
 
@@ -72,16 +84,23 @@ export default function Home({ navigation }) {
       </View>
 
       <Modal visible={modalVisible}>
-        <Button  title='eXIT' onPress={() => closeModal()}></Button>
-        <View>
-          <Text>Black sheep</Text>
-          <FlatList data={cartItems} renderItem={({ item: cartItem }) => (
-            <>
-              <CartItem />
-              <Text>{cartItem}</Text>
-            </>
-          )} />
-        </View>
+        <ScrollView>
+          <View>
+            <AntDesign name='arrowleft' size={28} onPress={() => closeModal()} />
+            {/* <Button  title='eXIT' onPress={() => closeModal()}></Button> */}
+          </View>
+          <View>
+            <FlatList data={cartItems} renderItem={({ item: cartItem }) => (
+              <>
+                <CartItem data={cartItem} />
+                {/* <Text>{cartItem.id}</Text> */}
+              </>
+            )} />
+          </View>
+        </ScrollView>
+        <TouchableOpacity style={styles.checkoutBtn} onPress={() => navigation.replace('Checkout', {products, cartItems, cartTotal})}>
+          <Text style={styles.checkoutBtnText}>Proceed to Checkout</Text>
+        </TouchableOpacity>
       </Modal>
 
       <FlatList data={products} renderItem={({ item }) => (
@@ -97,5 +116,17 @@ const styles = StyleSheet.create({
   headerIcon: {
     position: 'absolute',
     right: '0',
-  }
+  },
+  checkoutBtn: {
+    padding: 10,
+    backgroundColor: "#d4af37",
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  checkoutBtnText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
+  },
 });

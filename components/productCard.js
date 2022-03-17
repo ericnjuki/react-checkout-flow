@@ -36,20 +36,47 @@ export default function ProductCard({ data: product }) {
     currentCart.then((result)=>{
       // check if item in cart
     if(result == null) {
-      cartData.push({id:id, quantity:quantity});
+      cartData.push({id, quantity});
       storeData(JSON.stringify(cartData));
     } else {
         result = JSON.parse(result);
-        let resultCopy = result.slice();
+
+        let existingIndices = [];
         for (let i = 0; i < result.length; i++) {
-          if(result[i].id == id) {
-            // if item is in cart, increase qty
-            resultCopy[i].quantity++;
-          } else if(i === result.length - 1) {
-            // otherwise, it's a new item
-            resultCopy.push({id:id, quantity:quantity});
+          if(existingIndices.indexOf(result[i].id) == -1){
+            existingIndices.push(result[i].id);
           }
         }
+
+        let resultCopy = result.slice();
+        if(existingIndices.indexOf(id) != -1) {
+          for (let i = 0; i < result.length; i++) {
+            if(resultCopy[i].id == id) {
+              resultCopy[i].quantity++;
+            }
+          }
+        } else {
+          resultCopy.push({id, quantity});
+        }
+        // for (let i = 0; i < result.length; i++) {
+        //   // if(existingIndices.indexOf(result[i].id) != -1) {
+        //   //   console.log('3. item in cart');
+        //   //   resultCopy[i].quantity++;
+        //   // } else {
+        //   //   console.log('4. item NOT in cart');
+        //   //   resultCopy.push({id, quantity});
+        //   // }
+
+        //   // if(result[i].id == id) {
+        //   //   // if item is in cart, increase qty
+        //   //   console.log('3. item in cart');
+        //   //   resultCopy[i].quantity++;
+        //   // } else if(i === result.length - 1) {
+        //   //   // otherwise, it's a new item
+        //   //   console.log('4. item NOT in cart');
+        //   //   resultCopy.push({id, quantity});
+        //   // }
+        // }
         cartData = resultCopy;
         
         // use state?

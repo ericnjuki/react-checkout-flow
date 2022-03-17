@@ -32,5 +32,12 @@ export const globalStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 10,
+    fontSize: 18,
+    borderRadius: 6,
+  },
 });

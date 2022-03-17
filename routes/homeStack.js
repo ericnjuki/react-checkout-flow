@@ -4,6 +4,8 @@ import { createAppContainer } from 'react-navigation';
 import Home from '../screens/home';
 import ViewProductDetails from '../screens/viewProductDetails';
 import Header from '../components/header';
+import Checkout from '../screens/checkout';
+import Pay from '../screens/pay';
 
 
 const screens = {
@@ -17,6 +19,18 @@ const screens = {
     screen: ViewProductDetails,
     navigationOptions: {
       title: 'Product Details'
+    }
+  },
+  Checkout: {
+    screen: Checkout,
+    navigationOptions: {
+      title: 'Checkout'
+    }
+  },
+  Pay: {
+    screen: Pay,
+    navigationOptions: {
+      title: 'Pay'
     }
   },
 };
