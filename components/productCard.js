@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Image, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function ProductCard({ data: product }) {
+export default function ProductCard({ data: product, setCartItemsCount }) {
   const storeData = async (value) => {
     try {
       await AsyncStorage.setItem('@cartState', value)
@@ -37,6 +37,7 @@ export default function ProductCard({ data: product }) {
       // check if item in cart
     if(result == null) {
       cartData.push({id, quantity});
+      setCartItemsCount(1);
       storeData(JSON.stringify(cartData));
     } else {
         result = JSON.parse(result);
@@ -58,25 +59,8 @@ export default function ProductCard({ data: product }) {
         } else {
           resultCopy.push({id, quantity});
         }
-        // for (let i = 0; i < result.length; i++) {
-        //   // if(existingIndices.indexOf(result[i].id) != -1) {
-        //   //   console.log('3. item in cart');
-        //   //   resultCopy[i].quantity++;
-        //   // } else {
-        //   //   console.log('4. item NOT in cart');
-        //   //   resultCopy.push({id, quantity});
-        //   // }
 
-        //   // if(result[i].id == id) {
-        //   //   // if item is in cart, increase qty
-        //   //   console.log('3. item in cart');
-        //   //   resultCopy[i].quantity++;
-        //   // } else if(i === result.length - 1) {
-        //   //   // otherwise, it's a new item
-        //   //   console.log('4. item NOT in cart');
-        //   //   resultCopy.push({id, quantity});
-        //   // }
-        // }
+        setCartItemsCount(resultCopy.length);
         cartData = resultCopy;
         
         // use state?

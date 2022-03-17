@@ -6,6 +6,8 @@ import ViewProductDetails from '../screens/viewProductDetails';
 import Header from '../components/header';
 import Checkout from '../screens/checkout';
 import Pay from '../screens/pay';
+import Success from '../screens/success';
+import SuccessHeader from '../components/successHeader';
 
 
 const screens = {
@@ -33,6 +35,13 @@ const screens = {
       title: 'Pay'
     }
   },
+  Success: {
+    screen: Success,
+    navigationOptions: {
+      header: (props) => <SuccessHeader {...props} />,
+    }
+  },
+
 };
 
 const HomeStack = createStackNavigator(screens);

@@ -20,44 +20,42 @@ const getData = async (key) => {
     return null;
   }
 }
-let retrieveCartItems = function() {
-  let cartData = getData('@cartState');
-  cartData.then((result)=>{
-    result = JSON.parse(result);
-    console.log(result);
-    let cartItems = [];
-    // cartItems.push(<Text style={globalStyles.titleText} key={result.id}>{result.quantity}</Text>)
-    cartItems.push(result.quantity);
-    setCartItems
-    console.log(cartItems);
-    return cartItems;
-    return result;
-    setCartItems(cartItemsCopy);
-    console.log(cartItems);
-    console.log(cartItemsCopy);
-  })
-}
 
 export default function Home(props) {
   let navigation = props.navigation;
   const [products, setProducts] = useState(productData);
   const [cartItems, setCartItems] = useState([]);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
  
-  let retrieveCartItems = function() {
+  const retrieveCartItems = () => {
     let cartData = getData('@cartState');
     cartData.then((result)=>{
       result = JSON.parse(result);
       // let cartItems = [];
       // cartItems.push(result);
-      setCartItems(result);
-      getCartTotal(result);
-      // return cartItems;
+      if(result != null) {
+        setCartItems(result);
+        getCartTotal(result);
+        return 1;
+      } else {
+        return -1;
+      }
     })
   }
+  const getCartItemsCount = () => {
+    let cartData = getData('@cartState');
+    cartData.then((result)=>{
+      result = JSON.parse(result);
+      if(result != null) {
+        setCartItemsCount(result.length);
+      }
+    })
+  }
+  getCartItemsCount();
 
-  const getCartTotal = function(cartItemsCopy) {
+  const getCartTotal = (cartItemsCopy) => {
     let total = 0;
     for(let i = 0; i < cartItemsCopy.length; i++) {
       total += products[cartItemsCopy[i].id].price * cartItemsCopy[i].quantity;
@@ -66,7 +64,7 @@ export default function Home(props) {
     setCartTotal(total);
   }
 
-  const viewCart = function() {
+  const viewCart = () => {
     retrieveCartItems();
     setModalVisible(true);
   }
@@ -78,9 +76,12 @@ export default function Home(props) {
 
   return (
     <View style={globalStyles.container}>
-      <View style={styles.headerIcon}>
-        <AntDesign name='shoppingcart' size={28} onPress={() => viewCart()} />
-        <Text>(5)</Text>
+      <View style={styles.headerIconContainer}>
+        <View style={styles.headerIcon}>
+          <Text style={globalStyles.productTitle}>Cart</Text>
+          <AntDesign name='shoppingcart' size={28} onPress={() => viewCart()} />
+          <Text>({cartItemsCount})</Text>
+        </View>
       </View>
 
       <Modal visible={modalVisible}>
@@ -104,8 +105,8 @@ export default function Home(props) {
       </Modal>
        
       <FlatList data={products} renderItem={({ item }) => (
-        <TouchableOpacity onPress={() => navigation.navigate('ViewProductDetails', item)}>
-          <ProductCard data={item} />
+        <TouchableOpacity onPress={() => {navigation.navigate('ViewProductDetails', item); getCartItemsCount()}}>
+          <ProductCard data={item} setCartItemsCount={setCartItemsCount} />
         </TouchableOpacity>
       )} />
     </View>
@@ -113,9 +114,15 @@ export default function Home(props) {
 };
 
 const styles = StyleSheet.create({
+  headerIconContainer: {
+    marginBottom: 50,
+    flex: 1,
+  },  
   headerIcon: {
     position: 'absolute',
     right: '0',
+    flex: 1,
+    flexDirection: 'row',
   },
   checkoutBtn: {
     padding: 10,

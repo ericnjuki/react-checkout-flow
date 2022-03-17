@@ -4,9 +4,9 @@ import { globalStyles } from '../styles/global';
 
 export default function ViewProductDetails({ navigation }) {
 
-  const addToCart = () => {
-    console.log("added to cart");
-  }
+  // const addToCart = () => {
+  //   console.log("added to cart");
+  // }
 
   return (
     <View style={globalStyles.container}>
@@ -15,7 +15,7 @@ export default function ViewProductDetails({ navigation }) {
              style={{width: 400, height: 400}} />
       <Text>{ navigation.getParam('description') }</Text>
       <Text style={globalStyles.productTitle}>${ navigation.getParam('price') }</Text>
-      <Button title='Add To Cart' onPress={addToCart}></Button>
+      {/* <Button title='Add To Cart' onPress={addToCart}></Button> */}
     </View>
   );
 }

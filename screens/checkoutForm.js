@@ -23,8 +23,9 @@ const checkoutSchema = yup.object({
 });
 
 
-export default function CheckoutForm({ makePayment }) {
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+export default function CheckoutForm({ data }) {
+  const makePayment = data.makePayment;
+  const navigation = data.navigation;
 
   return (
     
@@ -119,12 +120,12 @@ export default function CheckoutForm({ makePayment }) {
         )}
       </Formik>
       <Text>Or use other supported methods:</Text>
-      <TouchableOpacity style={globalStyles.btn} onPress={() => navigation.push('Success', total)}>
+      <TouchableOpacity style={globalStyles.btn} onPress={() => navigation.push('Success')}>
         <View>
           <Text>PayPal</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={globalStyles.btn} onPress={() => navigation.push('Success', total)}>
+      <TouchableOpacity style={globalStyles.btn} onPress={() => navigation.push('Success')}>
         <View>
           <Text>Venmo</Text>
         </View>

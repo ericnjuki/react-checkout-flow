@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import { globalStyles } from '../styles/global';
 
 export default function Checkout(props) {
@@ -10,31 +10,29 @@ export default function Checkout(props) {
     }
     return items;
   }
-
   let navigation = props.navigation;
   let products = navigation.getParam('products');
   let items = getItems(navigation.getParam('cartItems'));
   let total = navigation.getParam('cartTotal');
 
-
-
   return (
     <View style={globalStyles.container}>
-      <Text style={globalStyles.productTitle}>Confirm Purchase</Text>
-
-      <FlatList data={items} renderItem={({ item }) => (
+      <ScrollView>
+        <Text style={globalStyles.productTitle}>Confirm Purchase</Text>
+        <FlatList data={items} renderItem={({ item }) => (
+          <View style={styles.productListItem}>
+            <Text>{ item.quantity } x { products[item.id].name }</Text>
+            <Image source={{uri: products[item.id].src}}
+                  style={{width: 100, height: 100}} />
+            <Text>{ item.quantity } x ${ products[item.id].price }</Text>
+            <Text> = ${ Math.floor(item.itemTotal * 100) / 100 }</Text>
+          </View>
+        )} />
+        <Text>TOTAL: ${total}</Text>
+      </ScrollView>
+      <TouchableOpacity style={styles.checkoutBtn} onPress={() => navigation.push('Pay', {total})}>
         <View style={styles.productListItem}>
-          <Text>{ item.quantity } x { products[item.id].name }</Text>
-          <Image source={{uri: products[item.id].src}}
-                 style={{width: 100, height: 100}} />
-          <Text>{ item.quantity } x ${ products[item.id].price }</Text>
-          <Text> = ${ Math.floor(item.itemTotal * 100) / 100 }</Text>
-        </View>
-      )} />
-      <Text>TOTAL: ${total}</Text>
-      <TouchableOpacity style={styles.checkoutBtn} onPress={() => navigation.push('Pay', total)}>
-        <View style={styles.productListItem}>
-          <Text>Enter Payment Details</Text>
+          <Text style={{textAlign:'center'}}>Proceed to Enter Payment Details</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -43,7 +41,8 @@ export default function Checkout(props) {
 
 const styles = StyleSheet.create({
   productListItem: {
-    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'center',
   },
   checkoutBtn: {
     padding: 10,
