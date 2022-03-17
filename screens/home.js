@@ -88,13 +88,11 @@ export default function Home(props) {
         <ScrollView>
           <View>
             <AntDesign name='arrowleft' size={28} onPress={() => closeModal()} />
-            {/* <Button  title='eXIT' onPress={() => closeModal()}></Button> */}
           </View>
           <View>
             <FlatList data={cartItems} renderItem={({ item: cartItem }) => (
               <>
                 <CartItem data={cartItem} />
-                {/* <Text>{cartItem.id}</Text> */}
               </>
             )} />
           </View>

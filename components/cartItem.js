@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     flexDirection: 'row',
-    gap: 5,
     marginHorizontal: 18,
     marginVertical: 20,
     alignItems: 'center',
