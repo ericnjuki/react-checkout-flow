@@ -40,4 +40,12 @@ export const globalStyles = StyleSheet.create({
     fontSize: 18,
     borderRadius: 6,
   },
+  btn: {
+    padding: 10,
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+    borderWidth: 1,
+    borderColor: '#ddd',
+  }
 });

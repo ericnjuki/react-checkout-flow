@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity, 
+  TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { globalStyles } from '../styles/global';
 import CheckoutForm from './checkoutForm';
 
@@ -14,11 +15,14 @@ export default function Pay(props) {
   }
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.productTitle}>Choose your payment option</Text>
-      <CheckoutForm pay={{makePayment, ccOnChange}} />
-
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={globalStyles.container}>
+        <>
+        <Text style={globalStyles.productTitle}>Choose your payment option</Text>
+        <CheckoutForm makePayment={makePayment} />
+        </>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
